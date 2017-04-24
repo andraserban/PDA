@@ -33,16 +33,17 @@ int index, index1, index2;
 					inputMatrix[index1][index2] = inputMatrix[index1][index] + inputMatrix[index][index2];
 			}
 		}
-
+		//all getter 
 		MPI_Reduce(inputMatrix, outputMatrix, NoOfElements*NoOfElements, MPI_INT, MPI_MIN, 0, MPI_COMM_WORLD);
 
 		if (rank == 0) {
+			//print matrix 
 			for (int i = 0; i < NoOfElements; i++)
 				for (int j = 0; j < NoOfElements; j++)
 					inputMatrix[i][j] = outputMatrix[i][j];
 			MPI_Bcast(inputMatrix, NoOfElements*NoOfElements, MPI_INT, 0, MPI_COMM_WORLD);
 		}
-
+		// fara barrier daca avem all getter
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 
